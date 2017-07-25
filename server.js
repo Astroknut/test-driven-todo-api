@@ -46,22 +46,23 @@ app.get('/', function homepage(req, res) {
 
 
 //***SEARCH CAUSES ERROR ON GET BY ID, DOESNT WORK YET**//
-// app.get('/api/todos/search', function search(req, res) {
-//   console.log("Search-200");
-//   const searchTask = req.query.q;
-//   const result = [];
+ // app.get('/api/todos/search', function search(req, res) {
+ //   console.log("Search-200");
+ //   const searchTask = req.query.q;
+ //   const result = [];
 
-//   todos.forEach(function(obj){
-//     if(obj.task == searchTask) result.push(obj);}
-//   );
-//   console.log(result);
+ //   todos.forEach(function(obj){
+ //     if(obj.task == searchTask) result.push(obj);}
+ //   );
+ //   console.log(result);
 
-//   res.json(result);
+ //   res.json(result);
 
   /* This endpoint responds with the search results from the
    * query in the request. COMPLETE THIS ENDPOINT LAST.
    */
-// });
+ // });
+ var counterI = 3;
 
 app.get('/api/todos', function index(req, res) {
   console.log("200");
@@ -73,32 +74,47 @@ app.post('/api/todos', function create(req, res) {
   const newTodo = req.body;
   console.log(newTodo);
   todos.push(newTodo);
-  newTodo._id = todos.length;
+  newTodo._id = counterI;
+  counterI++;
   res.json(newTodo);
 
 });
 
 app.get('/api/todos/:id', function show(req, res) {
   console.log("GetId-200");
-  res.json(todos[req.params.id-1]);
+  for (var i = 0; i < todos.length; i++) {
+    if(todos[i]._id == req.params.id){
+      res.json(todos[i]);
+    } 
+  } 
 });
 
 app.put('/api/todos/:id', function update(req, res) {
   console.log("Put-200");
-  const updateTarget = todos[req.params.id-1];
-  updateTarget.task = req.body.task;
-  updateTarget.description = req.body.description;
-  res.json(updateTarget);
+  for (var l=0; l<todos.length; l++){
+    if(todos[l]._id == req.params.id) {
+      todos[l].task = req.body.task;
+      todos[l].description = req.body.description;
+      res.json(todos[l]);
+    }
+  }
+  });
+  
   /* This endpoint will update a single todo with the
    * id specified in the route parameter (:id) and respond
    * with the newly updated todo.
    */
-});
+
 
 app.delete('/api/todos/:id', function destroy(req, res) {
-  const destroyTarget = req.params.id-1;
-  res.json(todos[destroyTarget] + "Deleted");
-  todos.splice(destroyTarget,1);
+  for (var i=0; i<todos.length; i++){
+    if(todos[i]._id == req.params.id){
+      var target = todos[i];
+      res.json(target);
+      todos.splice(i, 1);
+    }
+  }
+
   /* This endpoint will delete a single todo with the
    * id specified in the route parameter (:id) and respond
    * with deleted todo.
