@@ -46,22 +46,22 @@ app.get('/', function homepage(req, res) {
 
 
 //***SEARCH CAUSES ERROR ON GET BY ID, DOESNT WORK YET**//
-app.get('/api/todos/search', function search(req, res) {
-  console.log("Search-200");
-  const searchTask = req.query.q;
-  const result = [];
+// app.get('/api/todos/search', function search(req, res) {
+//   console.log("Search-200");
+//   const searchTask = req.query.q;
+//   const result = [];
 
-  todos.forEach(function(obj){
-    if(obj.task == searchTask) result.push(obj);}
-  );
-  console.log(result);
+//   todos.forEach(function(obj){
+//     if(obj.task == searchTask) result.push(obj);}
+//   );
+//   console.log(result);
 
-  res.json(result);
+//   res.json(result);
 
   /* This endpoint responds with the search results from the
    * query in the request. COMPLETE THIS ENDPOINT LAST.
    */
-});
+// });
 
 app.get('/api/todos', function index(req, res) {
   console.log("200");
