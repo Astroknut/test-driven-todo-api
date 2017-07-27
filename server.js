@@ -104,6 +104,7 @@ app.delete('/api/todos/:id', function destroy(req, res) {
       var target = todos[i];
       res.json(target);
       todos.splice(i, 1);
+      break;
     }
   }
 
