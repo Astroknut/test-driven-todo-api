@@ -21,6 +21,8 @@ var todos = [
   { _id: 3, task: 'Homework', description: 'Make this app super awesome!' }
 ];
 
+var counterI = 3;
+
 /**********
  * ROUTES *
  **********/
@@ -34,6 +36,7 @@ app.get('/', function homepage(req, res) {
 });
 
 
+
 /*
  * JSON API Endpoints
  *
@@ -44,25 +47,14 @@ app.get('/', function homepage(req, res) {
  * ORDER THAT THE TESTS DICTATE.
  */
 
-
-//***SEARCH CAUSES ERROR ON GET BY ID, DOESNT WORK YET**//
- // app.get('/api/todos/search', function search(req, res) {
- //   console.log("Search-200");
- //   const searchTask = req.query.q;
- //   const result = [];
-
- //   todos.forEach(function(obj){
- //     if(obj.task == searchTask) result.push(obj);}
- //   );
- //   console.log(result);
-
- //   res.json(result);
-
-  /* This endpoint responds with the search results from the
-   * query in the request. COMPLETE THIS ENDPOINT LAST.
-   */
- // });
- var counterI = 3;
+ app.get('/api/todos/search', function search(req, res) {
+   console.log("Search-200");
+  for (var i=0; i<todos.length; i++) {
+    if(todos[i].task == req.query.q){
+     res.json(todos[i]);
+    }
+  }
+ });
 
 app.get('/api/todos', function index(req, res) {
   console.log("200");
@@ -107,7 +99,7 @@ app.put('/api/todos/:id', function update(req, res) {
 
 
 app.delete('/api/todos/:id', function destroy(req, res) {
-  for (var i=0; i<todos.length; i++){
+  for (var i=todos.length-1; i>=0; i--){
     if(todos[i]._id == req.params.id){
       var target = todos[i];
       res.json(target);
